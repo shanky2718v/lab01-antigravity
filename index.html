@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResQora – Emergency Assistance & Healthcare Information Portal</title>
+  <meta name="description"
+    content="ResQora is a trusted public-facing emergency assistance and healthcare information platform. Find emergency contacts, discover nearby hospitals, and learn life-saving first aid.">
+  <meta name="theme-color" content="#172333">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DC2626' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='M12 8v8'/%3E%3Cpath d='M8 12h8'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#DC2626',
+              'red-hover': '#B91C1C',
+              'red-light': '#FEE2E2',
+              'navy-dark': '#172333',
+              'navy-secondary': '#26364A',
+              'navy-surface': '#1E2D42',
+              'navy-border': '#334760',
+              'bg-light': '#F5F7FA',
+              'text-muted': '#64748B',
+              'success': '#15803D'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-[#F5F7FA] text-[#0F172A] dark:bg-[#0B131E] dark:text-[#F1F5F9] transition-colors duration-200">
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ==========================================================================
+       A. HEADER & NAVIGATION
+       ========================================================================== -->
+  <header
+    class="sticky top-0 z-50 bg-[#172333] border-b border-white/10 text-white shadow-lg transition-all duration-200">
+    <!-- Top Alert Bar -->
+    <div class="bg-red-700/90 text-white text-xs py-1.5 px-4 font-medium tracking-wide">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-white live-pulse-dot" aria-hidden="true"></span>
+          <span>National Emergency Lifeline: Dial <strong>108</strong> for Medical Ambulance | <strong>112</strong> for
+            Unified Emergency</span>
+        </div>
+        <div class="hidden md:flex items-center gap-4 text-white/80 text-[11px]">
+          <span>Public Safety & Awareness Portal</span>
+          <span>•</span>
+          <span>Free Public Access</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Brand / Logo -->
+        <a href="#home" class="flex items-center gap-3 group focus-visible:outline-white">
+          <div
+            class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center shadow-lg shadow-red-900/40 group-hover:scale-105 transition-transform duration-200">
+            <i data-lucide="shield-plus" class="w-6 h-6 text-white stroke-[2.2]"></i>
+            <span class="absolute -top-1 -right-1 flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1.5">
+              <span
+                class="text-2xl font-black tracking-tight text-white group-hover:text-red-400 transition-colors">ResQora</span>
+              <span
+                class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-red-600/30 text-red-400 border border-red-500/30">Portal</span>
+            </div>
+            <span class="text-[11px] text-slate-300 font-normal tracking-wide hidden sm:block">Every Second. Every Life.
+              Every Connection.</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-6 desktop-nav" aria-label="Main Navigation">
+          <a href="#home" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">Home</a>
+          <a href="#services" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">Services</a>
+          <a href="#hospitals" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">Hospital
+            Finder</a>
+          <a href="#first-aid" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">First Aid</a>
+          <a href="#contacts" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">Contacts</a>
+          <a href="#road-safety" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">Road
+            Safety</a>
+          <a href="#faq" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">FAQ</a>
+          <a href="#about" class="nav-link text-sm font-medium text-slate-200 hover:text-white py-1">About</a>
+        </nav>
+
+        <!-- Right Side Controls -->
+        <div class="flex items-center gap-3">
+          <!-- Dark / Light Theme Toggle -->
+          <button id="theme-toggle"
+            class="p-2.5 rounded-lg bg-[#26364A] text-slate-200 hover:text-white hover:bg-[#1E2D42] transition-colors focus-visible:outline-white"
+            aria-label="Toggle visual theme">
+            <span id="theme-icon">
+              <i data-lucide="moon" class="w-5 h-5"></i>
+            </span>
+          </button>
+
+          <!-- Emergency Help Shortcut Button -->
+          <button
+            class="trigger-emergency-modal hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-md shadow-red-900/50 hover:shadow-red-600/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0">
+            <i data-lucide="phone-call" class="w-4 h-4 animate-pulse"></i>
+            <span>Emergency Help</span>
+          </button>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button id="mobile-menu-btn"
+            class="lg:hidden p-2.5 rounded-lg bg-[#26364A] text-white hover:bg-[#1E2D42] focus-visible:outline-white"
+            aria-expanded="false" aria-controls="mobile-menu" aria-label="Open mobile navigation menu">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#172333] border-t border-white/10 px-4 pt-3 pb-6 space-y-1">
+      <a href="#home"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">Home</a>
+      <a href="#services"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">Services</a>
+      <a href="#hospitals"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">Hospital
+        Finder</a>
+      <a href="#first-aid"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">First
+        Aid Guide</a>
+      <a href="#contacts"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">Emergency
+        Directory</a>
+      <a href="#road-safety"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">Ambulance
+        Road Safety</a>
+      <a href="#faq"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">FAQ</a>
+      <a href="#about"
+        class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-slate-200 hover:text-white hover:bg-[#26364A]">About
+        ResQora</a>
+
+      <div class="pt-4 border-t border-white/10 mt-2">
+        <button
+          class="trigger-emergency-modal w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-center shadow-lg">
+          <i data-lucide="phone-call" class="w-5 h-5"></i>
+          <span>Immediate Emergency Assistance</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         C. HERO SECTION
+         ========================================================================== -->
+    <section id="home"
+      class="relative overflow-hidden bg-gradient-to-b from-[#172333] via-[#1E2D42] to-[#172333] text-white py-16 md:py-24 border-b border-white/5">
+      <!-- Ambient Graphic Backdrops -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.15),transparent_50%)] pointer-events-none"
+        aria-hidden="true"></div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(38,54,74,0.3),transparent_50%)] pointer-events-none"
+        aria-hidden="true"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Hero Left Content -->
+          <div class="lg:col-span-7 space-y-6">
+            <!-- Active Helplines Status Badge -->
+            <div
+              class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-red-300 text-xs font-semibold tracking-wide shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-red-500 live-pulse-dot" aria-hidden="true"></span>
+              <span>24/7 National Emergency Helplines Active</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              Every Second Matters. <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-rose-300">Be
+                Prepared.</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+              Access emergency contact information, discover nearby hospitals, learn essential first-aid precautions and
+              understand how to respond responsibly during medical emergencies.
+            </p>
+
+            <!-- Call To Actions -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <button
+                class="trigger-emergency-modal btn-emergency inline-flex items-center gap-3 px-6 py-3.5 rounded-xl text-base font-bold text-white shadow-xl">
+                <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+                <span>Emergency Help</span>
+              </button>
+
+              <a href="#first-aid"
+                class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#26364A] hover:bg-[#334760] text-slate-100 font-semibold text-base border border-white/10 transition-colors shadow-md">
+                <i data-lucide="book-open" class="w-5 h-5 text-red-400"></i>
+                <span>First Aid Guide</span>
+              </a>
+            </div>
+
+            <!-- Trust / Quick Info Badges -->
+            <div class="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-left max-w-lg">
+              <div>
+                <div class="text-2xl font-bold text-white">108</div>
+                <div class="text-xs text-slate-400">Medical Ambulance</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-white">112</div>
+                <div class="text-xs text-slate-400">Unified Emergency</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-emerald-400">100%</div>
+                <div class="text-xs text-slate-400">Public Informational</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Right Visual: Professional Ambulance & Healthcare Graphic -->
+          <div class="lg:col-span-5 relative flex justify-center">
+            <div class="relative w-full max-w-md float-slow">
+              <!-- Glow Effect behind Card -->
+              <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-25 blur-xl">
+              </div>
+
+              <div class="relative rounded-2xl bg-[#1E2D42]/90 border border-white/15 p-6 backdrop-blur-xl shadow-2xl">
+                <!-- SVG Ambulance & Medical Monitor Graphic -->
+                <div class="rounded-xl bg-[#172333] p-5 border border-white/10 relative overflow-hidden">
+                  <!-- Heartbeat / ECG Wave Line -->
+                  <div
+                    class="flex items-center justify-between text-xs font-semibold text-slate-400 mb-4 pb-2 border-b border-white/10">
+                    <span class="flex items-center gap-1.5 text-red-400">
+                      <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                      Emergency Response Monitor
+                    </span>
+                    <span class="text-[11px] font-mono text-emerald-400">SYS ACTIVE</span>
+                  </div>
+
+                  <!-- Professional Ambulance SVG Illustration -->
+                  <div class="py-4 flex justify-center items-center">
+                    <svg viewBox="0 0 320 180" class="w-full h-auto max-w-[280px]" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <!-- Ground shadow -->
+                      <ellipse cx="160" cy="165" rx="110" ry="10" fill="#0E1724" opacity="0.6" />
+
+                      <!-- Ambulance Main Chassis -->
+                      <path d="M40 135 H250 V80 C250 75 245 70 240 70 H180 L145 70 H45 C42 70 40 72 40 75 Z"
+                        fill="#F8FAFC" />
+                      <path d="M180 70 L215 70 L245 105 H180 V70 Z" fill="#38BDF8" opacity="0.4" />
+                      <path d="M185 75 L210 75 L235 102 H185 V75 Z" fill="#172333" opacity="0.3" />
+
+                      <!-- Front Hood & Bumper -->
+                      <path d="M250 105 H270 C275 105 280 110 280 115 V135 H250 V105 Z" fill="#F1F5F9" />
+                      <rect x="270" y="118" width="10" height="12" rx="2" fill="#FBBF24" />
+                      <rect x="35" y="120" width="8" height="14" rx="1" fill="#DC2626" />
+
+                      <!-- Red Stripe & High Visibility Band -->
+                      <rect x="40" y="108" width="235" height="12" fill="#DC2626" />
+                      <rect x="40" y="122" width="235" height="3" fill="#FBBF24" />
+
+                      <!-- Medical Cross on Ambulance -->
+                      <rect x="98" y="82" width="24" height="24" rx="4" fill="#FEE2E2" />
+                      <path d="M110 86 V102 M102 94 H118" stroke="#DC2626" stroke-width="4.5" stroke-linecap="round" />
+
+                      <!-- Emergency Siren on Top -->
+                      <ellipse cx="150" cy="65" rx="12" ry="5" fill="#1E2D42" />
+                      <rect x="144" y="55" width="12" height="10" rx="3" fill="#DC2626" />
+                      <circle cx="150" cy="58" r="4" fill="#F87171" class="animate-pulse" />
+                      <!-- Siren Glow Waves -->
+                      <path d="M136 50 C144 45 156 45 164 50" stroke="#EF4444" stroke-width="2" stroke-linecap="round"
+                        opacity="0.75" />
+                      <path d="M130 44 C142 37 158 37 170 44" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"
+                        opacity="0.4" />
+
+                      <!-- Wheels with Rims -->
+                      <circle cx="85" cy="140" r="18" fill="#172333" />
+                      <circle cx="85" cy="140" r="9" fill="#94A3B8" />
+                      <circle cx="85" cy="140" r="4" fill="#172333" />
+
+                      <circle cx="225" cy="140" r="18" fill="#172333" />
+                      <circle cx="225" cy="140" r="9" fill="#94A3B8" />
+                      <circle cx="225" cy="140" r="4" fill="#172333" />
+                    </svg>
+                  </div>
+
+                  <!-- ECG Vital Sign Waveform Line -->
+                  <div
+                    class="h-10 w-full overflow-hidden relative mt-2 bg-[#0E1724]/60 rounded-lg p-1 border border-white/5 flex items-center">
+                    <svg class="w-full h-8" viewBox="0 0 300 40" preserveAspectRatio="none">
+                      <path
+                        d="M0,20 L60,20 L75,20 L80,5 L85,35 L90,15 L95,25 L100,20 L160,20 L175,20 L180,5 L185,35 L190,15 L195,25 L200,20 L300,20"
+                        fill="none" stroke="#22C55E" stroke-width="2" class="ecg-line" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Quick Metric Footer Inside Card -->
+                <div class="mt-4 flex items-center justify-between text-xs text-slate-300">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Toll-Free Nationwide</span>
+                  </div>
+                  <span class="text-slate-400">Standard Response: &lt; 15 Mins</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         D. EMERGENCY QUICK ACCESS (Top Priority)
+         ========================================================================== -->
+    <section class="py-10 bg-white dark:bg-[#0E1724] border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-8">
+          <div
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 dark:bg-red-950/50 text-red-700 dark:text-red-400 text-xs font-bold uppercase tracking-wider mb-2">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            Rapid Contact
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Emergency Quick Access</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Direct single-touch dialing for critical public
+            life support services.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+          <!-- Card 1: Ambulance 108 -->
+          <div
+            class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white p-6 sm:p-8 shadow-xl shadow-red-900/20 pulse-emergency flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span
+                  class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider">Medical
+                  Emergency</span>
+                <h3 class="text-2xl font-black text-white mt-3">Ambulance Service</h3>
+                <p class="text-red-100 text-sm mt-1">Direct access to state & national emergency medical transport,
+                  paramedic dispatch and critical trauma response.</p>
+              </div>
+              <div
+                class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20">
+                <i data-lucide="ambulance" class="w-8 h-8 text-white"></i>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-white/20 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <span class="text-xs text-red-200 block uppercase font-medium">Toll-Free Helpline</span>
+                <span class="text-4xl sm:text-5xl font-black tracking-tight text-white font-mono">108</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button
+                  class="copy-btn p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors"
+                  data-copy="108" aria-label="Copy ambulance number 108 to clipboard" title="Copy Number">
+                  <i data-lucide="copy" class="w-5 h-5"></i>
+                </button>
+                <a href="tel:108"
+                  class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-red-700 hover:bg-red-50 font-black text-base shadow-lg transition-transform hover:scale-105 active:scale-95">
+                  <i data-lucide="phone-call" class="w-5 h-5"></i>
+                  <span>Call 108</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: National Emergency 112 -->
+          <div
+            class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#172333] to-[#26364A] text-white p-6 sm:p-8 shadow-xl border border-white/10 flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span
+                  class="px-3 py-1 rounded-full bg-red-600/30 text-red-300 border border-red-500/30 text-xs font-bold uppercase tracking-wider">All-in-One
+                  Helpline</span>
+                <h3 class="text-2xl font-black text-white mt-3">National Emergency</h3>
+                <p class="text-slate-300 text-sm mt-1">Unified single emergency response number for Police, Fire,
+                  Ambulance, and disaster relief across all states.</p>
+              </div>
+              <div
+                class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20">
+                <i data-lucide="siren" class="w-8 h-8 text-red-400"></i>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <span class="text-xs text-slate-400 block uppercase font-medium">Unified 24/7 Helpline</span>
+                <span class="text-4xl sm:text-5xl font-black tracking-tight text-white font-mono">112</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button
+                  class="copy-btn p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors"
+                  data-copy="112" aria-label="Copy national emergency number 112 to clipboard" title="Copy Number">
+                  <i data-lucide="copy" class="w-5 h-5"></i>
+                </button>
+                <a href="tel:112"
+                  class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black text-base shadow-lg transition-transform hover:scale-105 active:scale-95">
+                  <i data-lucide="phone-call" class="w-5 h-5"></i>
+                  <span>Call 112</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         E. SERVICES SECTION
+         ========================================================================== -->
+    <section id="services" class="py-20 bg-[#F5F7FA] dark:bg-[#0B131E] transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span
+            class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">Portal
+            Offerings</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Essential Healthcare &
+            Emergency Services</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-3 text-base">Designed with clarity and speed to assist
+            citizens, caregivers, and first responders during unexpected crises.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Service Card 1 -->
+          <a href="#hospitals"
+            class="glass-card rounded-2xl p-6 flex flex-col justify-between group cursor-pointer focus-visible:outline-red-600">
+            <div>
+              <div
+                class="w-13 h-13 w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 flex items-center justify-center mb-5 group-hover:bg-red-600 group-hover:text-white transition-colors duration-200">
+                <i data-lucide="map-pin" class="w-6 h-6"></i>
+              </div>
+              <h3
+                class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                Find Hospitals</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Discover accredited hospitals, 24/7 casualty wards, and trauma centers nearest to your current location
+                via Google Maps.
+              </p>
+            </div>
+            <div
+              class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-sm font-bold text-red-600 dark:text-red-400 group-hover:translate-x-1 transition-transform">
+              <span>Search Hospitals</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </div>
+          </a>
+
+          <!-- Service Card 2 -->
+          <a href="#first-aid"
+            class="glass-card rounded-2xl p-6 flex flex-col justify-between group cursor-pointer focus-visible:outline-red-600">
+            <div>
+              <div
+                class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+              </div>
+              <h3
+                class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                First Aid Protocols</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Clear, verified, actionable first-aid guides covering CPR, severe bleeding, burns, shock, and fracture
+                stabilization.
+              </p>
+            </div>
+            <div
+              class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
+              <span>Explore Protocols</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </div>
+          </a>
+
+          <!-- Service Card 3 -->
+          <a href="#contacts"
+            class="glass-card rounded-2xl p-6 flex flex-col justify-between group cursor-pointer focus-visible:outline-red-600">
+            <div>
+              <div
+                class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-200">
+                <i data-lucide="phone-forwarded" class="w-6 h-6"></i>
+              </div>
+              <h3
+                class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                Emergency Directory</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Direct phone lines for Ambulance, Police, Fire, Disaster Management, Child Helpline, and Poison
+                Information centers.
+              </p>
+            </div>
+            <div
+              class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-sm font-bold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
+              <span>View Directory</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </div>
+          </a>
+
+          <!-- Service Card 4 -->
+          <a href="#road-safety"
+            class="glass-card rounded-2xl p-6 flex flex-col justify-between group cursor-pointer focus-visible:outline-red-600">
+            <div>
+              <div
+                class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors duration-200">
+                <i data-lucide="shield-alert" class="w-6 h-6"></i>
+              </div>
+              <h3
+                class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                Ambulance Road Safety</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Guidelines on creating green corridors, clearing intersections, and giving way safely to emergency
+                vehicles to protect lives.
+              </p>
+            </div>
+            <div
+              class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-sm font-bold text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform">
+              <span>Read Safety Rules</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         F. HOSPITAL FINDER SECTION
+         ========================================================================== -->
+    <section id="hospitals"
+      class="py-20 bg-white dark:bg-[#0E1724] border-t border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="max-w-3xl mx-auto text-center mb-10">
+          <span
+            class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">Hospital
+            Finder</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Locate Nearby Hospitals &
+            Emergency Rooms</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-base">Enter your locality, city or landmark to discover
+            verified healthcare providers and trauma centers with turn-by-turn navigation.</p>
+        </div>
+
+        <!-- Search Box Container -->
+        <div
+          class="max-w-2xl mx-auto bg-slate-50 dark:bg-[#152232] rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-xl">
+          <form id="hospital-search-form" onsubmit="return false;" class="space-y-4">
+            <div>
+              <label for="hospital-search-input"
+                class="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-2">
+                City, Area or Landmark
+              </label>
+              <div class="relative flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-1">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                  </div>
+                  <input type="text" id="hospital-search-input"
+                    placeholder="e.g. Bengaluru, Indiranagar, South Delhi, Andheri West"
+                    class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white dark:bg-[#0B131E] border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all text-sm font-medium"
+                    autocomplete="off">
+                </div>
+                <button type="button" id="hospital-search-btn"
+                  class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md hover:shadow-red-600/30 transition-all shrink-0 active:scale-95">
+                  <i data-lucide="map" class="w-4 h-4"></i>
+                  <span>Find on Maps</span>
+                </button>
+              </div>
+              <p id="hospital-search-error" class="hidden text-xs text-red-600 dark:text-red-400 mt-2 font-medium"
+                role="alert"></p>
+            </div>
+
+            <!-- Quick City Search Chips -->
+            <div class="pt-2">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-2">Quick Cities:</span>
+              <div class="flex flex-wrap gap-2">
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Bengaluru">Bengaluru</button>
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Mumbai">Mumbai</button>
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Delhi NCR">Delhi NCR</button>
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Hyderabad">Hyderabad</button>
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Chennai">Chennai</button>
+                <button type="button"
+                  class="city-chip px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  data-city="Kolkata">Kolkata</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Search Notice / Integrity Guarantee -->
+          <div
+            class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-700 flex items-start gap-3 text-xs text-slate-500 dark:text-slate-400">
+            <i data-lucide="info" class="w-4 h-4 text-slate-400 shrink-0 mt-0.5"></i>
+            <span>
+              <strong>Data Accuracy Notice:</strong> ResQora directly coordinates with Google Maps Live Navigation to
+              prevent simulated or outdated facility records. For immediate life threat, always dial
+              <strong>108</strong> first.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         G. FIRST AID INFORMATION SECTION
+         ========================================================================== -->
+    <section id="first-aid" class="py-20 bg-[#F5F7FA] dark:bg-[#0B131E] transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div>
+            <span
+              class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">Clinical
+              Guidance</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Essential First Aid
+              Awareness</h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 text-base max-w-xl">
+              Widely recognized emergency intervention guidelines to stabilize casualties while ambulance teams are in
+              transit.
+            </p>
+          </div>
+
+          <!-- Medical Disclaimer Card Pill -->
+          <div
+            class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-800 dark:text-amber-300 text-xs max-w-md flex items-start gap-2.5">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
+            <span><strong>Medical Disclaimer:</strong> For informational and educational awareness only. Never
+              substitute these guidelines for professional medical diagnosis or clinical care.</span>
+          </div>
+        </div>
+
+        <!-- Filter Buttons and Live Search -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <!-- Category Filter Tabs -->
+          <div
+            class="flex items-center gap-2 p-1.5 rounded-xl bg-slate-200/80 dark:bg-slate-800/80 self-start sm:self-auto w-full sm:w-auto"
+            role="tablist" aria-label="First Aid Categories">
+            <button
+              class="first-aid-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-red-600 text-white shadow-md"
+              data-filter="all" role="tab" aria-selected="true">
+              All Protocols
+            </button>
+            <button
+              class="first-aid-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              data-filter="injuries" role="tab" aria-selected="false">
+              Injuries
+            </button>
+            <button
+              class="first-aid-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              data-filter="emergencies" role="tab" aria-selected="false">
+              Medical Emergencies
+            </button>
+          </div>
+
+          <!-- Quick Keyword Filter Input -->
+          <div class="relative w-full sm:w-72">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <i data-lucide="filter" class="w-4 h-4"></i>
+            </div>
+            <input type="text" id="first-aid-search" placeholder="Search by symptom or condition..."
+              class="w-full pl-9 pr-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-xs placeholder-slate-400 focus:ring-2 focus:ring-red-500 outline-none">
+          </div>
+        </div>
+
+        <!-- First Aid Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="first-aid-cards-grid">
+
+          <!-- Card 1: Severe Bleeding -->
+          <div class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="injuries"
+            data-keywords="bleeding blood cut laceration hemorrhage wound direct pressure tourniquet">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400">Injuries</span>
+                <span class="text-xs font-mono text-slate-400">Priority: Immediate</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-950/50 text-red-600 flex items-center justify-center mb-4">
+                <i data-lucide="droplet" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Severe Bleeding</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Firm, continuous direct pressure with a clean dressing is critical. Elevate limb if fracture is not
+                suspected. Never remove blood-soaked dressings; add more layers over them.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="bleeding">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Burns -->
+          <div class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="injuries"
+            data-keywords="burns burn fire heat scald chemical boiling oil blister">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">Injuries</span>
+                <span class="text-xs font-mono text-slate-400">Priority: Rapid</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center mb-4">
+                <i data-lucide="flame" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Burns & Scalds</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Immediately cool with cool running tap water for 15-20 minutes. Cover loosely with sterile dressing or
+                cling film. Never apply ice, butter, oil, or toothpaste to burn areas.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="burns">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Suspected Fractures -->
+          <div class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="injuries"
+            data-keywords="fractures bone broken arm leg dislocation splint immobilize">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400">Injuries</span>
+                <span class="text-xs font-mono text-slate-400">Priority: Moderate</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center mb-4">
+                <i data-lucide="bone" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Suspected Fractures</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Immobilize the limb in the position found. Do not attempt to force or straighten angled bones. Support
+                joint above and below with soft padding or splints until paramedics arrive.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="fractures">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: Cardiac Emergencies -->
+          <div
+            class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between border-red-300 dark:border-red-900/60 shadow-lg"
+            data-category="emergencies"
+            data-keywords="cardiac heart attack chest pain cpr arrest compression aed breathing">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-red-600 text-white">Medical
+                  Emergencies</span>
+                <span class="text-xs font-mono text-red-600 dark:text-red-400 font-bold">Critical Level 1</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-950/50 text-red-600 flex items-center justify-center mb-4">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Cardiac Emergencies & CPR</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Recognize signs: chest tightness, breathlessness, collapse. If unresponsive and not breathing normally,
+                call 108 immediately and administer Hands-Only CPR at 100-120 compressions/minute.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="cardiac">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5: Unconsciousness -->
+          <div class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between"
+            data-category="emergencies"
+            data-keywords="unconsciousness fainting faint coma passing out recovery position airway breathing unresponsive">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400">Medical
+                  Emergencies</span>
+                <span class="text-xs font-mono text-slate-400">Priority: High</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-950/50 text-purple-600 flex items-center justify-center mb-4">
+                <i data-lucide="user-x" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Unconsciousness & Airway</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Check breathing immediately. If breathing normally, roll into the lateral Recovery Position to keep
+                airways clear and prevent choking. Never give fluids to an unconscious casualty.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="unconsciousness">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 6: Road Accidents -->
+          <div class="first-aid-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="injuries"
+            data-keywords="road accidents car bike collision crash spinal rta trauma safety highway">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span
+                  class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-400">Injuries</span>
+                <span class="text-xs font-mono text-slate-400">Priority: High</span>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-950/50 text-orange-600 flex items-center justify-center mb-4">
+                <i data-lucide="car" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Road Accidents & Collision</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Ensure personal safety first. Switch vehicle ignition off and warn traffic. Do not move casualty's neck
+                or spine unless immediate fire risk is present. Call 112 and 108.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <button
+                class="text-sm font-bold text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1.5 focus-visible:outline-red-600"
+                data-firstaid="accidents">
+                <span>View Full Protocol</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         H. EMERGENCY CONTACT DIRECTORY
+         ========================================================================== -->
+    <section id="contacts"
+      class="py-20 bg-white dark:bg-[#0E1724] border-t border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span
+            class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">National
+            Directory</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Verified Emergency
+            Helplines</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-base">Direct official national assistance contact
+            numbers with instant one-tap calling support.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+          <!-- Contact 1: Ambulance 108 -->
+          <div
+            class="glass-card rounded-2xl p-6 border-red-200 dark:border-red-900/40 relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div
+                  class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-950/60 text-red-600 flex items-center justify-center">
+                  <i data-lucide="ambulance" class="w-6 h-6"></i>
+                </div>
+                <span
+                  class="px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400">Medical</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Ambulance Service</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">24/7 dedicated medical emergency, paramedics &
+                hospital transport dispatch.</p>
+
+              <div class="my-6">
+                <span class="text-xs text-slate-400 uppercase font-semibold block">Dial Number</span>
+                <span class="text-4xl font-black text-slate-900 dark:text-white font-mono tracking-tight">108</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="tel:108"
+                class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow transition-colors">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                <span>Call 108</span>
+              </a>
+              <button
+                class="copy-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                data-copy="108" title="Copy Number">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Contact 2: National Emergency 112 -->
+          <div
+            class="glass-card rounded-2xl p-6 border-slate-300 dark:border-slate-700 relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div
+                  class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center">
+                  <i data-lucide="siren" class="w-6 h-6"></i>
+                </div>
+                <span
+                  class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">All-in-One</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">National Emergency</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Unified emergency response helpline (Police,
+                Fire, Medical, Disaster).</p>
+
+              <div class="my-6">
+                <span class="text-xs text-slate-400 uppercase font-semibold block">Dial Number</span>
+                <span class="text-4xl font-black text-slate-900 dark:text-white font-mono tracking-tight">112</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="tel:112"
+                class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold text-sm shadow transition-colors">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                <span>Call 112</span>
+              </a>
+              <button
+                class="copy-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                data-copy="112" title="Copy Number">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Contact 3: Police Helpline -->
+          <div
+            class="glass-card rounded-2xl p-6 border-slate-300 dark:border-slate-700 relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div
+                  class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center">
+                  <i data-lucide="shield" class="w-6 h-6"></i>
+                </div>
+                <span
+                  class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400">Security</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Police Assistance</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Law enforcement, crime response & public
+                security (routed via unified 112).</p>
+
+              <div class="my-6">
+                <span class="text-xs text-slate-400 uppercase font-semibold block">Dial Number</span>
+                <span class="text-4xl font-black text-slate-900 dark:text-white font-mono tracking-tight">112</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="tel:112"
+                class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-sm shadow transition-colors">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                <span>Call Police</span>
+              </a>
+              <button
+                class="copy-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                data-copy="112" title="Copy Number">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Additional Safety Helplines Strip -->
+        <div
+          class="mt-8 max-w-5xl mx-auto p-4 rounded-xl bg-slate-50 dark:bg-[#152232] border border-slate-200 dark:border-slate-700 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div>
+            <span class="text-xs text-slate-400 block font-medium">Fire Rescue</span>
+            <span class="text-base font-bold text-slate-800 dark:text-slate-200">101 / 112</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 block font-medium">Women Helpline</span>
+            <span class="text-base font-bold text-slate-800 dark:text-slate-200">1091</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 block font-medium">Child Helpline</span>
+            <span class="text-base font-bold text-slate-800 dark:text-slate-200">1098</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 block font-medium">National Poison Info</span>
+            <span class="text-base font-bold text-slate-800 dark:text-slate-200">1800-116-117</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         I. AMBULANCE ROAD SAFETY SECTION
+         ========================================================================== -->
+    <section id="road-safety" class="py-20 bg-gradient-to-br from-[#172333] via-[#1E2D42] to-[#172333] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="navy-card-glass rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            <!-- Left Header & Impact Callout -->
+            <div class="lg:col-span-5 space-y-5">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 text-red-300 border border-red-500/30 text-xs font-bold uppercase tracking-wider">
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                Road Etiquette & Civic Duty
+              </div>
+
+              <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+                Give Way. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-rose-300">Save Lives.</span>
+              </h2>
+
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                Emergency ambulances transport critical patients where every sixty seconds lost in traffic directly
+                affects survival rates. Creating an unobstructed green corridor is a moral obligation and legally
+                mandated.
+              </p>
+
+              <!-- Golden Hour Card -->
+              <div class="p-4 rounded-xl bg-red-950/40 border border-red-500/30">
+                <div class="text-sm font-bold text-red-300 flex items-center gap-2 mb-1">
+                  <i data-lucide="clock" class="w-4 h-4 text-red-400"></i>
+                  The Golden Hour Rule
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  The first 60 minutes after severe traumatic injury or cardiac episode represents the window where
+                  prompt clinical treatment yields the highest probability of preventing death or irreversible damage.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right Safety Rules Grid -->
+            <div class="lg:col-span-7 space-y-4">
+
+              <!-- Rule 1 -->
+              <div
+                class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                <div
+                  class="w-9 h-9 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                  1</div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Give way safely to approaching ambulances</h4>
+                  <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                    Check your mirrors, indicate your intention, and pull smoothly to the side of the road when you hear
+                    sirens or observe flashing lights.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Rule 2 -->
+              <div
+                class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                <div
+                  class="w-9 h-9 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                  2</div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Avoid blocking emergency access routes</h4>
+                  <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                    Never park on designated hospital access corridors, emergency room driveways, or roadside breakdown
+                    lanes.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Rule 3 -->
+              <div
+                class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                <div
+                  class="w-9 h-9 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                  3</div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Avoid sudden lane changes & panic braking</h4>
+                  <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                    Do not slam on brakes unexpectedly. Maintain predictable driving behavior so the ambulance driver
+                    can navigate through traffic smoothly.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Rule 4 -->
+              <div
+                class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                <div
+                  class="w-9 h-9 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                  4</div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Keep intersections & junctions clear</h4>
+                  <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                    Do not block pedestrian zebra crossings or intersection yellow box junctions, even during red light
+                    congestion.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Rule 5 -->
+              <div
+                class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                <div
+                  class="w-9 h-9 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                  5</div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Do not follow ambulances to bypass traffic</h4>
+                  <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                    Tailgating an emergency ambulance is extremely dangerous, illegal, and obstructs subsequent
+                    emergency escorts or support vehicles.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         J. FAQ SECTION
+         ========================================================================== -->
+    <section id="faq" class="py-20 bg-[#F5F7FA] dark:bg-[#0B131E] transition-colors">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-12">
+          <span
+            class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">Frequently
+            Asked Questions</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Emergency Guidance FAQ
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-base">Answers to common public queries regarding
+            emergency calling, ambulance operations, and platform scope.</p>
+        </div>
+
+        <div class="space-y-4" id="faq-accordion">
+
+          <!-- FAQ Item 1 -->
+          <div class="faq-item">
+            <button
+              class="faq-header w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 dark:text-white text-base sm:text-lg focus-visible:outline-red-600"
+              aria-expanded="false">
+              <span>What number should I call for an ambulance?</span>
+              <span class="faq-icon ml-4 shrink-0 text-slate-400">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </span>
+            </button>
+            <div class="faq-content px-5 sm:px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p>
+                In India, dial <strong>108</strong> for emergency medical ambulance and trauma dispatch. You can also
+                dial <strong>112</strong>, which is the unified national emergency number that directly coordinates with
+                ambulance, police, and fire rescue services. Both numbers are toll-free and accessible 24 hours a day, 7
+                days a week from any mobile or landline phone without a SIM balance.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item">
+            <button
+              class="faq-header w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 dark:text-white text-base sm:text-lg focus-visible:outline-red-600"
+              aria-expanded="false">
+              <span>What information should I provide when requesting emergency assistance?</span>
+              <span class="faq-icon ml-4 shrink-0 text-slate-400">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </span>
+            </button>
+            <div class="faq-content px-5 sm:px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p class="mb-2">When communicating with the emergency dispatcher, remain calm and clearly provide:</p>
+              <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+                <li><strong>Exact Location & Landmarks:</strong> Building name, street name, nearest landmark or highway
+                  exit.</li>
+                <li><strong>Nature of Emergency:</strong> What happened (e.g. road accident, chest pain, fall, severe
+                  bleeding).</li>
+                <li><strong>Condition of Casualty:</strong> Conscious or unconscious, breathing normally or gasping,
+                  apparent injuries.</li>
+                <li><strong>Number of People Affected:</strong> Helps the dispatcher send sufficient ambulances and
+                  personnel.</li>
+                <li><strong>Your Contact Details:</strong> Your callback phone number so the responding crew can contact
+                  you for directions.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item">
+            <button
+              class="faq-header w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 dark:text-white text-base sm:text-lg focus-visible:outline-red-600"
+              aria-expanded="false">
+              <span>Can this website book or dispatch an ambulance?</span>
+              <span class="faq-icon ml-4 shrink-0 text-slate-400">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </span>
+            </button>
+            <div class="faq-content px-5 sm:px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p>
+                <strong>No. ResQora is strictly an educational and public awareness information portal.</strong> It does
+                not have access to emergency dispatch infrastructure, does not track ambulances, and cannot dispatch
+                vehicles. To request an actual ambulance, you must dial <strong>108</strong> or <strong>112</strong>
+                directly on your telephone.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item">
+            <button
+              class="faq-header w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 dark:text-white text-base sm:text-lg focus-visible:outline-red-600"
+              aria-expanded="false">
+              <span>Does this website provide medical treatment or diagnostic advice?</span>
+              <span class="faq-icon ml-4 shrink-0 text-slate-400">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </span>
+            </button>
+            <div class="faq-content px-5 sm:px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p>
+                <strong>No.</strong> ResQora provides standardized, widely accepted first-aid guidelines for
+                informational purposes only. It is not an artificial intelligence medical diagnostic tool and is not a
+                substitute for certified medical personnel, emergency room doctors, or hospital treatment. Always
+                consult qualified healthcare providers during medical crises.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item">
+            <button
+              class="faq-header w-full flex items-center justify-between p-5 sm:p-6 text-left font-bold text-slate-900 dark:text-white text-base sm:text-lg focus-visible:outline-red-600"
+              aria-expanded="false">
+              <span>What is the difference between dialing 108 and 112?</span>
+              <span class="faq-icon ml-4 shrink-0 text-slate-400">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </span>
+            </button>
+            <div class="faq-content px-5 sm:px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p>
+                <strong>108</strong> is a dedicated Emergency Response Service primarily focused on medical ambulances,
+                emergency maternal care, and disaster rescue operations. <strong>112</strong> is the pan-India Unified
+                Emergency Response Support System (ERSS) that integrates Police (100), Fire (101), and Ambulance (108)
+                under one single emergency number. Both are operational 24/7.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         K. ABOUT RESQORA SECTION
+         ========================================================================== -->
+    <section id="about" class="py-20 bg-white dark:bg-[#0E1724] border-t border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <div class="lg:col-span-6 space-y-6">
+            <span
+              class="px-3.5 py-1 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">About
+              The Initiative</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Built For Preparedness.
+              Designed To Save Lives.</h2>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
+              <strong>ResQora</strong> is an independent digital public service portal created to bridge critical
+              awareness gaps during high-stress healthcare emergencies. Panic, lack of immediate contact numbers, and
+              delayed bystander first-aid often lead to preventable loss of life.
+            </p>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
+              By consolidating validated national helplines, hospital search navigation, structured first-aid guidance,
+              and ambulance road ethics into an accessible interface, ResQora empowers every citizen to act with speed
+              and composure.
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 pt-4">
+              <div
+                class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <div class="text-red-600 dark:text-red-400 font-bold text-lg mb-1">Speed & Clarity</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400">Zero bloat, accessible touch targets, and rapid
+                  single-click dialing.</div>
+              </div>
+              <div
+                class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <div class="text-red-600 dark:text-red-400 font-bold text-lg mb-1">Verified Information</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400">Compliant with accepted global resuscitation and
+                  trauma protocols.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6">
+            <div
+              class="rounded-3xl bg-[#172333] p-8 text-white border border-white/10 shadow-2xl relative overflow-hidden">
+              <div
+                class="absolute -right-10 -bottom-10 w-48 h-48 bg-red-600/20 rounded-full blur-3xl pointer-events-none">
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="heart" class="w-5 h-5 text-red-500"></i>
+                Core Public Safety Pillars
+              </h3>
+
+              <div class="space-y-4 text-sm text-slate-300">
+                <div class="flex items-start gap-3">
+                  <div
+                    class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+                    ✓</div>
+                  <div>
+                    <strong class="text-white">Demystifying Emergency Calls:</strong> Helping callers communicate clear,
+                    actionable location and condition parameters to 108 and 112 dispatchers.
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div
+                    class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+                    ✓</div>
+                  <div>
+                    <strong class="text-white">Active Bystander Empowerment:</strong> Educating individuals to start
+                    immediate chest compressions, stop bleeding, and maintain open airways before paramedics arrive.
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div
+                    class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+                    ✓</div>
+                  <div>
+                    <strong class="text-white">Civic Road Safety Awareness:</strong> Eliminating corridor delays by
+                    instilling collective road discipline to yield to sirens immediately.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                <span>ResQora Public Initiative</span>
+                <span>Version 2.0 • Production Build</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       L. FOOTER
+       ========================================================================== -->
+  <footer class="bg-[#172333] text-white border-t border-white/10 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+
+        <!-- Brand & Mission Info -->
+        <div class="lg:col-span-2 space-y-4">
+          <a href="#home" class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center shadow">
+              <i data-lucide="shield-plus" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-2xl font-black tracking-tight text-white">ResQora</span>
+          </a>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+            Emergency Assistance & Healthcare Information Portal. Helping citizens access verified emergency helplines,
+            hospital navigation, and life-saving first-aid guidelines.
+          </p>
+          <div class="text-xs text-slate-400 font-mono">
+            Tagline: <span class="text-slate-300">Every Second. Every Life. Every Connection.</span>
+          </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Quick Navigation</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+            <li><a href="#hospitals" class="hover:text-white transition-colors">Hospital Finder</a></li>
+            <li><a href="#first-aid" class="hover:text-white transition-colors">First Aid Protocols</a></li>
+            <li><a href="#road-safety" class="hover:text-white transition-colors">Road Safety Rules</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#about" class="hover:text-white transition-colors">About ResQora</a></li>
+          </ul>
+        </div>
+
+        <!-- Emergency Directory Numbers -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Emergency Helplines</h4>
+          <ul class="space-y-2.5 text-xs text-slate-400">
+            <li>
+              <span class="block text-slate-500">Ambulance:</span>
+              <a href="tel:108" class="text-white hover:text-red-400 font-mono font-bold text-sm">108</a>
+            </li>
+            <li>
+              <span class="block text-slate-500">Unified Emergency:</span>
+              <a href="tel:112" class="text-white hover:text-red-400 font-mono font-bold text-sm">112</a>
+            </li>
+            <li>
+              <span class="block text-slate-500">Fire Brigade:</span>
+              <a href="tel:101" class="text-white hover:text-red-400 font-mono font-bold text-sm">101</a>
+            </li>
+            <li>
+              <span class="block text-slate-500">Police Helpline:</span>
+              <a href="tel:112" class="text-white hover:text-red-400 font-mono font-bold text-sm">112</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Disclaimer & Informational Purpose -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-red-400 mb-4">Critical Legal Notice</h4>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            ResQora is a non-commercial, frontend-only public informational portal. It does not provide medical
+            consultations, diagnosis, clinical treatment, or ambulance dispatch. In a life-threatening crisis, dial 108
+            or 112 immediately.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Copyright Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>
+          © 2026 ResQora Portal. All rights reserved. Designed for public health preparedness.
+        </div>
+        <div class="flex items-center gap-6">
+          <span>Non-commercial Public Welfare Project</span>
+          <a href="#home" class="text-slate-400 hover:text-white transition-colors">Back to Top ↑</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL 1: EMERGENCY ASSISTANCE CONFIRMATION MODAL
+       ========================================================================== -->
+  <div id="emergency-modal"
+    class="modal-backdrop fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
+    role="dialog" aria-modal="true" aria-labelledby="emergency-modal-title">
+    <div
+      class="modal-container w-full max-w-lg bg-white dark:bg-[#152232] rounded-3xl p-6 sm:p-8 shadow-2xl border border-red-500/30 overflow-hidden relative">
+
+      <!-- Close Button -->
+      <button
+        class="close-emergency-modal absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        aria-label="Close emergency modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-4">
+        <div
+          class="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 flex items-center justify-center shrink-0">
+          <i data-lucide="phone-call" class="w-6 h-6 animate-pulse"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400">Emergency Quick
+            Dial</span>
+          <h3 id="emergency-modal-title" class="text-2xl font-black text-slate-900 dark:text-white">Call Emergency
+            Assistance</h3>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">
+        Select the appropriate service to place a direct toll-free emergency call from your device:
+      </p>
+
+      <!-- Direct Dial Action Buttons -->
+      <div class="space-y-3 mb-6">
+        <a href="tel:108"
+          class="flex items-center justify-between p-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold transition-all shadow-lg hover:shadow-red-600/30">
+          <div class="flex items-center gap-3">
+            <i data-lucide="ambulance" class="w-6 h-6"></i>
+            <div class="text-left">
+              <span class="block text-base">Ambulance & Paramedics</span>
+              <span class="text-xs text-red-100 font-normal">Immediate medical trauma dispatch</span>
+            </div>
+          </div>
+          <span class="text-2xl font-mono font-black">108</span>
+        </a>
+
+        <a href="tel:112"
+          class="flex items-center justify-between p-4 rounded-2xl bg-[#172333] hover:bg-[#26364A] text-white font-bold border border-white/10 transition-all shadow-lg">
+          <div class="flex items-center gap-3">
+            <i data-lucide="siren" class="w-6 h-6 text-red-400"></i>
+            <div class="text-left">
+              <span class="block text-base">Unified National Emergency</span>
+              <span class="text-xs text-slate-300 font-normal">Police, Fire & Medical routing</span>
+            </div>
+          </div>
+          <span class="text-2xl font-mono font-black">112</span>
+        </a>
+      </div>
+
+      <!-- Checklist Before Calling -->
+      <div
+        class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300">
+        <div class="font-bold uppercase tracking-wide text-slate-800 dark:text-white mb-2 flex items-center gap-1.5">
+          <i data-lucide="clipboard-check" class="w-4 h-4 text-emerald-500"></i>
+          What to Tell The Dispatcher:
+        </div>
+        <ol class="list-decimal pl-4 space-y-1 text-slate-600 dark:text-slate-300">
+          <li>Exact location & notable nearby landmark</li>
+          <li>Patient condition (conscious, breathing, bleeding)</li>
+          <li>Number of injured or sick individuals</li>
+          <li>Any hazards (fire, traffic, electrical lines)</li>
+          <li>Your callback phone number</li>
+        </ol>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button
+          class="close-emergency-modal px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          Cancel / Return
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: FIRST AID PROTOCOL DETAIL MODAL
+       ========================================================================== -->
+  <div id="first-aid-modal"
+    class="modal-backdrop fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
+    role="dialog" aria-modal="true" aria-labelledby="first-aid-modal-title">
+    <div
+      class="modal-container w-full max-w-2xl bg-white dark:bg-[#152232] rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto relative">
+
+      <!-- Close Button -->
+      <button
+        class="close-first-aid-modal absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        aria-label="Close first aid modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Protocol Header -->
+      <div class="mb-5 pr-8">
+        <span id="first-aid-modal-category"
+          class="px-3 py-1 rounded-full text-xs font-semibold inline-block mb-2">Category</span>
+        <h3 id="first-aid-modal-title" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">Protocol
+          Title</h3>
+      </div>
+
+      <!-- Protocol Body dynamically populated -->
+      <div id="first-aid-modal-body"></div>
+
+      <!-- Modal Footer -->
+      <div
+        class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
+        <span class="text-xs text-slate-500 dark:text-slate-400">Emergency Protocol Standard • ResQora Care</span>
+        <div class="flex items-center gap-3">
+          <a href="tel:108"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            <span>Call 108</span>
+          </a>
+          <button
+            class="close-first-aid-modal px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top"
+    class="p-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-xl focus-visible:outline-red-600"
+    aria-label="Scroll back to top">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+  </button>
+
+  <!-- Core JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>
